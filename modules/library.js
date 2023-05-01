@@ -13,6 +13,8 @@ export default class Library {
   removeBook() {
     let books = [];
     books = Books.filter((bookObj) => bookObj.id !== this.book.id);
-    localStorage.setItem('Books', JSON.stringify(books));
+    Books.length = 0;
+    Books.push(...books);
+    localStorage.setItem('Books', JSON.stringify(Books));
   }
 }

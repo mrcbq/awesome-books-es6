@@ -8,7 +8,6 @@ function displayBooks() {
   const bookList = document.createElement('ul');
 
   Books.forEach((book, index) => {
-    // console.log(index);
     const li = document.createElement('li');
     li.setAttribute('id', book.id);
     li.innerHTML = `
@@ -23,16 +22,8 @@ function displayBooks() {
     }
 
     li.querySelector('.remove-btn').addEventListener('click', () => {
-      // Remove the book from the Books array
-      const bookIndex = Books.indexOf(book);
-      console.log(bookIndex);
-      if (bookIndex !== -1) {
-        Books.splice(bookIndex, 1);
-        const library = new Library(book);
-        library.removeBook();
-      }
-
-      // Remove the book from the DOM
+      const library = new Library(book);
+      library.removeBook();
       li.remove();
       displayBooks();
     });
