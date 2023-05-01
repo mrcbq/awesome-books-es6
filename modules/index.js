@@ -1,55 +1,45 @@
 import Book from './book.js';
+import Books from './books.js';
+import Library from './library.js';
 
-let Books = JSON.parse(localStorage.getItem('Books')) ?? [
-  {
-    id: 0,
-    title: 'El coronel no tiene quien le escriba',
-    author: 'Gabriel Garcia Marquez',
-  },
-];
-
-class Library {
-  constructor(book) {
-    this.book = book;
-  }
-
-  addBook() {
-    Books.push(this.book);
-    localStorage.setItem('Books', JSON.stringify(Books));
-  }
-
-  removeBook() {
-    Books = Books.filter((bookObj) => bookObj.id !== this.book.id);
-    localStorage.setItem('Books', JSON.stringify(Books));
-  }
-}
-
-function displayBook() {
+function displayBooks() {
   const bookListDiv = document.querySelector('.book-list');
   bookListDiv.innerHTML = '';
   const bookList = document.createElement('ul');
-  Books.forEach((element, idx) => {
+
+  Books.forEach((book, index) => {
+    // console.log(index);
     const li = document.createElement('li');
-    li.setAttribute('id', element.id);
+    li.setAttribute('id', book.id);
     li.innerHTML = `
-    <p><b> "${element.title}" </b> By ${element.author} </p> 
+      <p><b>"${book.title}"</b> by ${book.author}</p>
+      <button class="remove-btn">Remove</button>
     `;
-    const removeBtn = document.createElement('button');
-    removeBtn.innerHTML = 'Remove';
-    removeBtn.addEventListener('click', () => {
-      const library = new Library(element);
-      library.removeBook();
-      li.remove();
-      displayBook();
-    });
-    li.appendChild(removeBtn);
-    if (idx % 2 === 0) {
+
+    if (index % 2 === 0) {
       li.classList.add('dark');
     } else {
       li.classList.add('light');
     }
+
+    li.querySelector('.remove-btn').addEventListener('click', () => {
+      // Remove the book from the Books array
+      const bookIndex = Books.indexOf(book);
+      console.log(bookIndex);
+      if (bookIndex !== -1) {
+        Books.splice(bookIndex, 1);
+        const library = new Library(book);
+        library.removeBook();
+      }
+
+      // Remove the book from the DOM
+      li.remove();
+      displayBooks();
+    });
+
     bookList.appendChild(li);
   });
+
   bookListDiv.appendChild(bookList);
 }
 
@@ -71,7 +61,7 @@ form.addEventListener('submit', (e) => {
     const library = new Library(book);
     library.addBook();
     form.reset();
-    displayBook();
+    displayBooks();
   }
 });
 
@@ -91,7 +81,7 @@ function showList() {
   bookList.style.display = 'block';
   formContainer.style.display = 'none';
   contactInfo.style.display = 'none';
-  displayBook();
+  displayBooks();
 }
 
 listBtn.addEventListener('click', showList);
