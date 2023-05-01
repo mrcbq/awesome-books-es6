@@ -1,3 +1,4 @@
+import { DateTime } from './luxon.js';
 import Book from './book.js';
 import Books from './books.js';
 import Library from './library.js';
@@ -56,8 +57,6 @@ form.addEventListener('submit', (e) => {
   }
 });
 
-// NAVBAR LINKS
-
 // List - Link
 const bookList = document.querySelector('.book-list-container');
 const listBtn = document.querySelector('.navList');
@@ -89,15 +88,8 @@ contactBtn.addEventListener('click', () => {
   contactInfo.style.display = 'block';
 });
 
-const currentDate = new Date().toLocaleString('default', {
-  month: 'long',
-  year: 'numeric',
-  day: 'numeric',
-  hour: 'numeric',
-  minute: 'numeric',
-  second: 'numeric',
-  hour12: true,
-});
-document.getElementById('date').innerHTML = currentDate;
+const dt = DateTime.now();
+const luxonTime = dt.toFormat('MMM-yyyy-dd hh:mm:ss a');
 
+document.getElementById('date').innerHTML = luxonTime;
 showList();
