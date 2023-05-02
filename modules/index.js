@@ -15,12 +15,8 @@ function displayBooks() {
       <p><b>"${book.title}"</b> by ${book.author}</p>
       <button class="remove-btn">Remove</button>
     `;
-
-    if (index % 2 === 0) {
-      li.classList.add('dark');
-    } else {
-      li.classList.add('light');
-    }
+    const classToAdd = index % 2 === 0 ? 'dark' : 'light';
+    li.classList.add(classToAdd);
 
     li.querySelector('.remove-btn').addEventListener('click', () => {
       const library = new Library(book);
@@ -67,12 +63,12 @@ const addNewBtn = document.querySelector('.navNew');
 const contactBtn = document.querySelector('.navContact');
 const contactInfo = document.querySelector('.contact');
 
-function showList() {
+const showList = () => {
   bookList.style.display = 'block';
   formContainer.style.display = 'none';
   contactInfo.style.display = 'none';
   displayBooks();
-}
+};
 
 listBtn.addEventListener('click', showList);
 
