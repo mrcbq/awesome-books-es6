@@ -3,7 +3,7 @@ import Book from './book.js';
 import Books from './books.js';
 import Library from './library.js';
 
-function displayBooks() {
+const displayBooks = () => {
   const bookListDiv = document.querySelector('.book-list');
   bookListDiv.innerHTML = '';
   const bookList = document.createElement('ul');
@@ -29,7 +29,7 @@ function displayBooks() {
   });
 
   bookListDiv.appendChild(bookList);
-}
+};
 
 const form = document.querySelector('#form');
 form.addEventListener('submit', (e) => {
